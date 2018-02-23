@@ -1,0 +1,127 @@
+To install python-django project in windows:
+
+    1. Install Microsoft Web plateform Installer (https://www.microsoft.com/web/downloads/platform.aspx).
+    2. Install Python with WFastCGI
+        - Open IIS Manager -> open Web Plateform Installer.
+        - Search for WFAstCGI (Enter WFAstCGI in search box -> press Enter).
+        - Select "WFAStCGI 2.1 GAteway for IIS and Python 2.7.9
+        - Insatll (It will install python 2.7.9 And WFastCGI)
+    3. Set Environment variable for path settings
+        - right click on my computer -> properties -> Advance system settings -> Environment variables.
+            - Edit PATH variable: in variable value box append "C:\Python27;C:\Python27\python.exe;C:\Python27\Scripts\;C:\Python27\Lib\site-packages\django\bin;"
+            - if path variable does not present currently then click on "New" button.
+                - add "PATH" in variable name box and "C:\Python27;C:\Python27\python.exe;C:\Python27\Scripts\;C:\Python27\Lib\site-packages\django\bin;" in variable value box.
+            - click on ok -> ok -> close the dialog box.
+        - Run the command "python --version" in cmd prompt to ensure all paths are set.
+
+    4. Install virtualenv:
+        - in cmd prompt change directory to the dir where virtualenv files will be placed.
+        - run command "pip install virtualenv" in cmd.
+        - run command "virtualenv venv". (it will create a dir named as "venv" containing some other dirs).
+        - cd venv and press enter.
+        - to activate virtual env, run cmd ".\Scripts\activate".
+        - to deactivate virtual env, run cmd "deactivate".
+
+
+    5. Install django:
+        - Run the following commands in cmd
+            - cd venv
+            - .\Scripts\activate
+            - pip install django==1.10.5
+        - To ensure run the command "django-admin --version".
+        optional:
+        [- To start a new project: django-admin startproject test_project]
+        [- To run the project: python manage.py runserver]
+
+
+    6.Install pyMySQL:
+        - pip install pyMySQL
+
+    7. Install django-rest:
+        - pip install djangorestframework
+
+    8. Add package enum:
+        - pip install --upgrade pip enum34
+
+    9. Install image
+        - pip install image
+
+    ** pip install pdfkit
+	download wkhtmltopdf from https://wkhtmltopdf.org/downloads.html
+	and install
+	set path as C:\Program Files\wkhtmltopdf\bin\
+
+    10. Install git
+        - Download git installer for windows
+        - Install it.
+        - Set Environment variable for git path settings
+        - Edit PATH variable: in variable value box append  "C:\Program Files\Git\bin\;"
+        - Click on ok.
+
+Django on IIS:
+
+    1. open IIS manager
+    2. Add new web site
+        - Right click on Sites->Add Web Site->Enter site name. e.g: GPS
+        - Enter project physical path. e.g: D:\venv\gps
+        - Enter port no. e.g: 8008 (By default port:80)
+        - Click on ok.
+        - Copy the "wfastcgi.py" file from C:\Python27\Scripts\ directory and paste it in project root directory.
+    3. Add Handler Mapping
+        - Double click on added site.
+        - Double click on "Handler Mappings"
+        - Click on Add "Add Module Mapping..." (in right panel)
+        - Request path: *
+        - Module: FastCgiModule
+        - Executable(optional): D:\venv\Scripts\python.exe|D:\venv\gps\wfastcgi.py
+        - Name: any handler name. e.g: GPS Handler
+        - click on Request Restrictions -> uncheck "invoke handler only if request is mapped to" -> click on ok.
+        - click on ok -> popup is open -> click on no.
+    4. Edit FastCGI Application settings
+        - Click on pc name in IIS manager -> double click on FastCGI Settings
+        - Click on "Add Application"
+        - Full Path: D:\venv\Scripts\python.exe
+        - Arguments: D:\venv\gps\wfastcgi.py
+        - FastCGI Properties: click on Environment Variables -> click on "..."
+        - click on "Add":
+            - Name: DJANGO_SETTINGS_MODULE    Value: gps.settings (gps.settings_questionnaire)
+        - click on Add:
+            - Name: PYTHONPATH    Value: D:\venv\gps
+        - click on Add:
+            - Name: WSGI_HANDLER    Value: django.core.wsgi.get_wsgi_application()
+        - click on ok -> ok
+    5. Convert static folder to Application
+        - right click on static folder in GPS site -> Convert to Application.
+        - click on static -> Handler Mappings -> remove GPS Handler from handler list.
+
+
+
+Access Permission:
+
+    1. In IIS Manager, right click on site name -> edit permission -> security tab -> Edit -> Add -> enter IIS_IUSRS -> check names -> OK -> click on IIS_IUSRS in list of user names -> check "Read & Execute", "List Folder contents", "Read" -> OK.
+
+    2. right click on static folder -> edit permission -> security tab -> Edit -> Add -> enter IUSR -> check names -> OK -> click on IUSR in list of user names -> check "Read & Execute", "List Folder contents", "Read" -> OK.
+
+    3. right click on thumbnails folder in static -> edit permission -> security tab -> Edit -> click on IIS_IUSRS in list of user names -> check "Modify" -> Apply -> OK.
+
+    4. right click on document folder -> edit permission -> security tab -> Edit -> click on IIS_IUSRS in list of user names -> check "Modify", "Read & Execute", "List Folder contents", "Read", "Write" -> Apply -> OK.
+
+    5. right click on log folder -> edit permission -> security tab -> Edit -> click on IIS_IUSRS in list of user names -> check "Modify", "Read & Execute", "List Folder contents", "Read", "Write" -> Apply -> OK.
+
+
+
+Import db:
+    - change datetime(6) -> datetime
+    - change datetime default current_timestamp -> timestamp default current_timestamp
+
+
+To open a port in the Windows firewall for TCP access:
+    - Open control panel, open windows firewall.
+    - In the Windows Firewall with Advanced settings, in the left pane, right-click Inbound Rules, and then click New Rule in the action pane.
+    - In the Rule Type dialog box, select Port, and then click Next.
+    - In the Protocol and Ports dialog box, select TCP. Select Specific local ports, and then type the port number of the instance of the Database Engine, such as 3306 for the default instance. Click Next.
+    - In the Action dialog box, select Allow the connection, and then click Next.
+    - In the Profile dialog box, select any profiles that describe the computer connection environment when you want to connect to the Database Engine, and then click Next.
+    - In the Name dialog box, type a name and description for this rule, and then click Finish.
+
+
