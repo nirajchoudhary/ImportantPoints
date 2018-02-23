@@ -1,0 +1,19 @@
+create view history_extended as (
+  select
+    history.*,
+    case when itemname = "A" then itemvalue end as A,
+    case when itemname = "B" then itemvalue end as B,
+    case when itemname = "C" then itemvalue end as C
+  from history
+);
+
+
+create view history_itemvalue_pivot as (
+  select
+    hostid,
+    GROUP_CONCAT(A SEPARATOR ', ') as A,
+    GROUP_CONCAT(B SEPARATOR ', ') as B,
+    GROUP_CONCAT(C SEPARATOR ', ') as C
+  from history_extended
+  group by hostid
+);
