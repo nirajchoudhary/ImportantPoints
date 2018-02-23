@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.1
+Name=desktopApp
+Comment=This is my comment
+Exec=/var/www/html/aa.sh
+Icon=/home/mindfire/Pictures/icon.png
+Terminal=true
+Type=Application
+Categories=Utility;Application;
