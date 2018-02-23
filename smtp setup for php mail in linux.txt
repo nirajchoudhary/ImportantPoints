@@ -1,0 +1,18 @@
+Send Mail in php using SMTP:
+
+1. Install SMTP Mail Server (Linux): sudo apt-get install ssmtp
+
+2. ssmtp.conf configuration: (File Location: /etc/ssmtp/ssmtp.conf)
+	mailhub=smtp.gmail.com:587
+	AuthUser=tushar.s1994@gmail.com
+	AuthPass=email_password
+	UseSTARTTLS=YES
+ 
+	# You can only do this if you've verified your domain with Gmail.
+	# If you haven't, delete, or add a # before this
+	#hostname=yourwebsite.com
+ 
+	FromLineOverride=YES
+
+3. php.ini configuration: (File Location: /etc/php/7.0/apache2/php.ini)
+	sendmail_path = /usr/sbin/ssmtp -t
