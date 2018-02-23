@@ -1,0 +1,17 @@
+pip install django==1.10.5
+pip install Twisted==16.4.1
+pip install cryptography>=1.9
+pip install paramiko
+pip install python-scrapyd-api
+pip install scrapyd
+pip install pypiwin32
+scrapyd-client: download and python setup.py install
+
+pip install lxml
+pip install pyasn1-modules attrs
+scrapyd-deploy
+scrapyd-deploy -l
+pip install pymysql
+
+(vScrapy) D:\vScrapy\scrapy\scrapy_project>scrapyd
+
