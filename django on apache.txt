@@ -1,0 +1,108 @@
+mkdir carrypanda.com
+cd carrypanda.com
+
+sudo apt-get install python-pip
+
+sudo apt-get install git
+git clone https://nirajchoudhary@gitlab.com/carrypanda/carrypanda.git
+
+sudo apt-get update
+sudo apt-get install lamp-server^
+sudo apt-get install mysql-server
+sudo apt-get install phpmyadmin
+
+
+
+sudo nano /etc/apache2/apache2.conf
+Then add the following line to the end of the file:
+
+Include /etc/phpmyadmin/apache.conf
+ctrl+x   -> Y -> Enter
+
+Then restart apache:
+sudo service apache2 restart
+__________________________________________________________________________________
+
+sudo pip install django==1.6.2
+sudo apt-get install python-mysqldb
+sudo pip install django-chart-tools==1.0
+sudo pip install python-dateutil==2.5.3
+sudo pip install image
+sudo pip install requests
+__________________________________________________________________________________
+
+To start cronjob:
+crontab -e
+55 23 * * * python /home/ubuntu/carrypanda.com/carrypanda/carrypandaapp/cronjobscript/autoStartAndEndTrip.py
+__________________________________________________________________________________
+
+sudo nano /etc/apache2/sites-available/carrypanda.com.conf
+
+copy the code as given below and paste it...
+-------------------------------------------------
+WSGIScriptAlias / /home/ubuntu/carrypanda.com/carrypanda/carrypanda/wsgi.py
+WSGIPythonPath /home/ubuntu/carrypanda.com/carrypanda
+<Directory /home/ubuntu/carrypanda.com/carrypanda/carrypanda>
+    <Files wsgi.py>
+        Order deny,allow
+        Require all granted
+    </Files>
+</Directory>
+Alias /media/ /home/ubuntu/carrypanda.com/carrypanda/media/
+Alias /static/ /home/ubuntu/carrypanda.com/carrypanda/carrypandaapp/static/
+<Directory /home/ubuntu/carrypanda.com/carrypanda/carrypandaapp/static>
+    Require all granted
+</Directory>
+<Directory /home/ubuntu/carrypanda.com/carrypanda/media/>
+    Require all granted
+</Directory>
+
+
+--------------------------------------------------
+
+sudo a2ensite carrypanda.com.conf
+
+
+Apache Error log file:
+tail -f /var/log/apache2/error.log
+
+
+------------------------------------------------------------------------
+
+Install apache
+sudo apt-get install apache2
+13.126.68.37
+elstic ip: 35.154.230.99
+ssh -i "Test.pem" ubuntu@ec2-35-154-230-99.ap-south-1.compute.amazonaws.com
+
+sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
+sudo apt-get install sendmail
+-----------------------------------------------------------------------------------
+sudo mkdir -p /var/www/html/mycaonweb.com/
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/mycaonweb.com.conf
+sudo nano /etc/apache2/sites-available/mycaonweb.com.conf
+
+ServerAdmin admin@mycaonweb.com
+ServerName mycaonweb.com
+ServerAlias www.mycaonweb.com
+DocumentRoot /var/www/html/mycaonweb.com
+
+sudo a2ensite mycaonweb.com.conf
+sudo service apache2 restart
+sudo nano /etc/hosts
+127.0.0.1 mycaonweb.com
+-----------------------------------------------------------------------------------
+sudo mkdir -p /var/www/html/tsfoundation.in/
+sudo cp /etc/apache2/sites-available/mycaonweb.com.conf /etc/apache2/sites-available/tsfoundation.in.conf
+sudo nano /etc/apache2/sites-available/tsfoundation.in.conf
+
+ServerAdmin info@tsfoundation.in
+ServerName tsfoundation.in
+ServerAlias www.tsfoundation.in
+DocumentRoot /var/www/html/tsfoundation.in
+
+sudo a2ensite tsfoundation.in.conf
+sudo service apache2 restart
+sudo nano /etc/hosts
+127.0.0.1 tsfoundation.in
+
